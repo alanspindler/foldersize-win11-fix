@@ -1,0 +1,9 @@
+Folder Size Win11 Client Patch
+Copyright (C) 2026 Alan Spindler
+
+This program is a derivative work of Folder Size for Windows by Brian Oraas
+(https://foldersize.sourceforge.net/), licensed under the GNU General Public
+License version 2.
+
+New source files under client/ are licensed under GPLv2 (see LICENSE).
+upstream-2.0/ contains upstream reference source under GPLv2.

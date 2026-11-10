@@ -1,0 +1,5 @@
+/build/
+*.msi
+*.zip
+dist/*.exe
+!dist/.gitkeep

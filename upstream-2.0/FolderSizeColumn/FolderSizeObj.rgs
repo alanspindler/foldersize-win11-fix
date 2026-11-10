@@ -1,0 +1,24 @@
+HKCR
+{
+	NoRemove CLSID
+	{
+		ForceRemove {04DAAD08-70EF-450E-834A-DCFAF9B48748}
+		{
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+		}
+	}
+	NoRemove Folder
+	{
+		NoRemove ShellEx
+		{
+			NoRemove ColumnHandlers
+			{
+				ForceRemove {04DAAD08-70EF-450E-834A-DCFAF9B48748}
+			}
+		}
+	}
+}
