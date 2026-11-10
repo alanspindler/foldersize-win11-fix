@@ -46,22 +46,61 @@ flowchart LR
 
 Código do patch: [`client/src/`](client/src/)  
 Referência do upstream 2.0 (GPL): [`upstream-2.0/`](upstream-2.0/)  
-Binários extraídos da MSI 2.6 (somente referência): [`reference/`](reference/)
+**Pacote pronto para instalar (binários GPLv2):** [`redist/`](redist/)
 
-## Instalação
+## Instalação (sem baixar o SourceForge)
 
-1. Instale o **Folder Size 2.6 x64** oficial ([MSI no SourceForge](https://sourceforge.net/projects/foldersize/files/foldersize/2.6/)).
-2. Confirme o serviço **FolderSize** em execução (`services.msc`).
-3. Feche o cliente na bandeja (*Exit*).
-4. Substitua o executável:
+Tudo que você precisa está neste repositório — **não é obrigatório** baixar o MSI original.
 
+### Opção A — ZIP da Release (recomendado)
+
+1. Baixe [FolderSize-Win11-Patch-2.6.1.0.zip](https://github.com/alanspindler/foldersize-win11-fix/releases/latest) (ou o asset mais recente).
+2. Extraia e abra PowerShell **como Administrador** na pasta.
+3. Execute:
+
+   ```powershell
+   .\install.ps1
    ```
-   C:\Program Files\FolderSize\FolderSize.exe
-   ```
 
-   pelo build deste repo (`dist/FolderSize.exe` ou [GitHub Releases](https://github.com/alanspindler/foldersize-win11-fix/releases), quando publicado).
+   Para iniciar com o Windows: `.\install.ps1 -StartWithWindows`
 
-5. Inicie de novo pelo Menu Iniciar **sem** “Executar como administrador” (processo elevado não enxerga o Explorer do usuário).
+### Opção B — clone do GitHub
+
+```powershell
+git clone https://github.com/alanspindler/foldersize-win11-fix.git
+cd foldersize-win11-fix
+# PowerShell como Administrador:
+.\packaging\install.ps1
+```
+
+O script copia os arquivos de [`redist/`](redist/) para `C:\Program Files\FolderSize`, registra o serviço **FolderSize**, inicia o cliente e configura o applet do Painel de Controle.
+
+### Só atualizar o cliente (já tem o Folder Size instalado)
+
+Substitua `C:\Program Files\FolderSize\FolderSize.exe` pelo [`redist/FolderSize.exe`](redist/FolderSize.exe) (patch) e reinicie o cliente pela bandeja — **sem** elevar o processo (admin não vê o Explorer do usuário).
+
+### Desinstalar
+
+```powershell
+.\packaging\uninstall.ps1   # como Administrador
+```
+
+## Posso compilar e distribuir? (GPLv2)
+
+**Sim**, desde que você respeite a [GPLv2](LICENSE):
+
+- Mantenha a licença e o aviso de copyright ([NOTICE](NOTICE)).
+- Disponibilize o **código-fonte** das partes que você modificar (aqui: `client/` no GitHub).
+- Se redistribuir binários, qualquer pessoa que receba os binários pode pedir o código correspondente.
+
+**O que está neste pacote**
+
+| Arquivo | Origem |
+|---------|--------|
+| `FolderSize.exe` | **Recompilado** — patch Win11 (`client/src`) |
+| `FolderSizeSvc.exe`, `FolderSize.cpl`, `FolderSizeColumn.dll` | Binários **2.6 x64** do projeto original (GPLv2, sem alteração), republicados neste repo para instalação completa |
+
+O autor original não publicou o fonte da 2.6; incluímos o fonte **2.0** em `upstream-2.0/` como referência GPL e o fonte novo do cliente. Isso **não** substitui o projeto oficial nem implica endosso do autor Brian Oraas — é um **fork comunitário** para Windows 11.
 
 ## Compilar
 
@@ -74,7 +113,11 @@ cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 ```
 
-Saída: `build/FolderSize.exe` (versão de recurso **2.6.1.0**).
+Saída: `build/FolderSize.exe` (versão de recurso **2.6.1.0**). Atualize `redist/` com:
+
+```powershell
+.\packaging\build-redist.ps1 -Zip   # gera também o ZIP para Release
+```
 
 ## Teste rápido (Windows 11)
 
