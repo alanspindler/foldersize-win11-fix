@@ -1,5 +1,6 @@
 /build/
 *.msi
 FolderSize-Win11-Patch-*.zip
+installer-output/
 dist/*
 !dist/.gitkeep

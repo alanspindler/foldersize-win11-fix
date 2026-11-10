@@ -52,7 +52,16 @@ Referência do upstream 2.0 (GPL): [`upstream-2.0/`](upstream-2.0/)
 
 Tudo que você precisa está neste repositório — **não é obrigatório** baixar o MSI original.
 
-### Opção A — ZIP da Release (recomendado)
+### Opção A — instalador `.exe` (recomendado)
+
+1. Baixe **`FolderSize-Win11-Setup-2.6.1.0.exe`** na [página de Releases](https://github.com/alanspindler/foldersize-win11-fix/releases/latest).
+2. Execute o assistente (Avançar → Avançar → Concluir). O instalador pede permissão de administrador para copiar arquivos e registrar o serviço.
+3. Marque **“Iniciar o Folder Size com o Windows”** se quiser o cliente na inicialização (equivalente a `HKCU\...\Run`).
+4. Ao terminar, o serviço **FolderSize** fica instalado e o cliente pode abrir automaticamente (outra opção do assistente).
+
+Desinstale pelo *Painel de Controle → Programas* ou pelo atalho *Desinstalar Folder Size* no menu Iniciar.
+
+### Opção B — ZIP da Release (PowerShell)
 
 1. Baixe [FolderSize-Win11-Patch-2.6.1.0.zip](https://github.com/alanspindler/foldersize-win11-fix/releases/latest) (ou o asset mais recente).
 2. Extraia e abra PowerShell **como Administrador** na pasta.
@@ -64,7 +73,7 @@ Tudo que você precisa está neste repositório — **não é obrigatório** bai
 
    Para iniciar com o Windows: `.\install.ps1 -StartWithWindows`
 
-### Opção B — clone do GitHub
+### Opção C — clone do GitHub
 
 ```powershell
 git clone https://github.com/alanspindler/foldersize-win11-fix.git
@@ -117,6 +126,7 @@ Saída: `build/FolderSize.exe` (versão de recurso **2.6.1.0**). Atualize `redis
 
 ```powershell
 .\packaging\build-redist.ps1 -Zip   # gera também o ZIP para Release
+.\packaging\build-installer.ps1   # Inno Setup → installer-output\FolderSize-Win11-Setup-2.6.1.0.exe
 ```
 
 ## Teste rápido (Windows 11)
